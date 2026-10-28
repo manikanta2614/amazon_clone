@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Amazon - Home</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+
+        /* Navbar */
+
+        .navbar {
+            background-color: #131921;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .search {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+
+        /* Hero Section */
+
+        .hero {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #555;
+        }
+
+        .shop-button {
+            display: inline-block;
+            background-color: #ffd814;
+            color: black;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+
+        /* Categories */
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .category {
+            background: white;
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+            transition: 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .category a {
+            text-decoration: none;
+            color: #222;
+        }
+
+        .category-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .category h3 {
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .category span {
+            color: #0073bb;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 40px;
+            background-color: #131921;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        /* Products */
+
+            .products-section {
+                padding: 30px;
+                max-width: 1100px;
+                margin: auto;
+            }
+
+            .products-section h2 {
+                text-align: center;
+                font-size: 30px;
+                margin-bottom: 25px;
+            }
+
+            .products {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 25px;
+            }
+
+            .product-card {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+            }
+
+            .product-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: contain;
+            }
+
+            .product-card h3 {
+                margin: 10px 0;
+            }
+
+            .product-card p {
+                color: #555;
+            }
+
+            .product-card a {
+                display: inline-block;
+                background-color: #ffd814;
+                color: black;
+                padding: 10px 15px;
+                margin-top: 8px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Amazon
+        </div>
+
+        <input
+            type="text"
+            class="search"
+            placeholder="Search products"
+        >
+
+        <a href="#" class="nav-link">
+            Login
+        </a>
+
+        <a href="{% url 'cart' %}" class="nav-link">
+            🛒 Cart
+        </a>
+
+    </div>
+
+
+    <!-- Hero Section -->
+
+    <div class="hero">
+
+        <h1>
+            Welcome to Amazon
+        </h1>
+
+        <p>
+            Discover amazing products at great prices
+        </p>
+
+        <a href="{% url 'product_list' %}" class="shop-button">
+            Shop Now
+        </a>
+
+    </div>
+
+
+    <!-- Categories -->
+
+    <div class="categories">
+
+    {% for category in categories %}
+
+        <div class="category">
+
+            <a href="{% url 'category_products' category.name %}">
+
+                <div class="category-icon">
+                    {{ category.icon }}
+                </div>
+
+                <h3>{{ category.name }}</h3>
+
+                <span>Shop Now →</span>
+
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>No categories available.</p>
+
+    {% endfor %}
+
+    </div>
+    <!-- Products -->
+
+    <div class="products-section">
+
+    <h2>Featured Products</h2>
+
+    <div class="products">
+
+        {% for product in products %}
+
+            <div class="product-card">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+
+                <h3>{{ product.name }}</h3>
+
+                <p>{{ product.description }}</p>
+
+                <h3>₹{{ product.price }}</h3>
+
+                <p>Category: {{ product.category }}</p>
+
+                <p>Stock: {{ product.stock }}</p>
+
+                <a href="{% url 'product_detail' product.id %}">
+                    View Product
+                </a>
+
+                <a href="{% url 'add_to_cart' product.id %}">
+                    🛒 Add to Cart
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <p>No products available.</p>
+
+        {% endfor %}
+
+    </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            © 2026 Amazon Mini Project
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Shopping Cart</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+
+        .navbar {
+            background-color: #131921;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .cart-item h2 {
+            margin-top: 0;
+        }
+
+        .total {
+            background-color: white;
+            padding: 20px;
+            text-align: right;
+            border-radius: 8px;
+        }
+
+        .order-button {
+            display: inline-block;
+            background-color: #ffd814;
+            color: black;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .continue {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0073bb;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="navbar">
+
+        <a href="{% url 'home' %}">
+            🛒 Amazon Mini Store
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <h1>Shopping Cart 🛒</h1>
+
+
+        {% if products %}
+
+            {% for item in products %}
+
+                <div class="cart-item">
+
+                    <h2>
+                        {{ item.product.name }}
+                    </h2>
+
+                    <p>
+                        Price: ₹{{ item.product.price }}
+                    </p>
+
+                    <p>
+                        Quantity: {{ item.quantity }}
+                    </p>
+
+                    <p>
+                        Item Total: ₹{{ item.item_total }}
+                    </p>
+                    <a href="{% url 'remove_from_cart' item.product.id %}">
+                        Remove
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="total">
+
+                <h2>
+                    Cart Total: ₹{{ total }}
+                </h2>
+
+                <a href="{% url 'home' %}" class="order-button">
+                    Continue Shopping
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="cart-item">
+
+                <h2>
+                    Your cart is empty 🛒
+                </h2>
+
+                <a href="{% url 'home' %}" class="continue">
+                    ← Continue Shopping
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</body>
+
+</html>

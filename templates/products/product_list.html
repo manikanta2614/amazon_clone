@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Amazon - Products</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+
+        .navbar {
+            background-color: #131921;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .search {
+            width: 400px;
+            padding: 10px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            width: 250px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px gray;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #ffd814;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="logo">
+            Amazon
+        </div>
+
+        <input
+            type="text"
+            class="search"
+            placeholder="Search products"
+        >
+
+        <div>
+            Login | Cart
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <h1>Our Products</h1>
+        <div style="text-align: center; margin-bottom: 30px;">
+
+            
+
+        </div>
+
+        <div class="products">
+
+            {% for product in products %}
+
+            <div class="card">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+
+                <h2>{{ product.name }}</h2>
+
+                <p>{{ product.description }}</p>
+
+                <p class="price">
+                    ₹{{ product.price }}
+                </p>
+
+                <p>
+                    Category: {{ product.category }}
+                </p>
+
+                <p>
+                    Stock: {{ product.stock }}
+                </p>
+
+                <a href="{% url 'product_detail' product.id %}" class="button">
+                    View Product
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <h2>No products available</h2>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

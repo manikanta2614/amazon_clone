@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Order Successful</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+
+        .success {
+            width: 500px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #ffd814;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="success">
+
+        <h1>🎉 Order Placed Successfully!</h1>
+
+        <h2>
+            Thank you, {{ order.customer_name }}
+        </h2>
+
+        <p>
+            Order ID: {{ order.id }}
+        </p>
+
+        <p>
+            Product: {{ order.product.name }}
+        </p>
+
+        <p>
+            Quantity: {{ order.quantity }}
+        </p>
+
+        <p>
+            Total Price: ₹{{ order.total_price }}
+        </p>
+
+        <p>
+            Status: {{ order.status }}
+        </p>
+
+        <a href="{% url 'home' %}">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</body>
+
+</html>
